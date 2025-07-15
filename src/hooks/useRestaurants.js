@@ -11,7 +11,7 @@ export function useRestaurants(filters = {}) {
       setLoading(true)
       setError(null)
       const data = await apiService.restaurants.list(filters)
-      setRestaurants(data.data || data)
+      setRestaurants(data.items || data)
     } catch (err) {
       setError(err.message)
       console.error('Error fetching restaurants:', err)

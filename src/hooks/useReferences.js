@@ -12,7 +12,7 @@ export function useCities() {
         setLoading(true)
         setError(null)
         const data = await apiService.references.cities.list()
-        setCities(data.data || data)
+        setCities(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching cities:', err)
@@ -38,7 +38,7 @@ export function useRestaurantTypes() {
         setLoading(true)
         setError(null)
         const data = await apiService.references.restaurantTypes.list()
-        setRestaurantTypes(data.data || data)
+        setRestaurantTypes(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching restaurant types:', err)
@@ -64,7 +64,7 @@ export function usePriceSegments() {
         setLoading(true)
         setError(null)
         const data = await apiService.references.priceSegments.list()
-        setPriceSegments(data.data || data)
+        setPriceSegments(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching price segments:', err)
@@ -90,7 +90,7 @@ export function useCookingTags() {
         setLoading(true)
         setError(null)
         const data = await apiService.references.cookingTags.list()
-        setCookingTags(data.data || data)
+        setCookingTags(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching cooking tags:', err)
@@ -116,7 +116,7 @@ export function useIngredients() {
         setLoading(true)
         setError(null)
         const data = await apiService.references.ingredients.list()
-        setIngredients(data.data || data)
+        setIngredients(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching ingredients:', err)
