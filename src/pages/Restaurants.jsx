@@ -36,7 +36,7 @@ export function Restaurants() {
   const [viewMode, setViewMode] = useState('cards') // 'cards' or 'table'
 
   // Получаем данные из API
-  const { restaurants, loading, error } = useRestaurants({
+  const { restaurants, pagination, loading, error } = useRestaurants({
     search: searchQuery,
     city_id: selectedCity,
     restaurant_type_id: selectedType,
@@ -289,9 +289,13 @@ export function Restaurants() {
       {/* Pagination */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          Показано {restaurants?.length || 0} ресторанов
+          Показано {restaurants?.length || 0} из {pagination?.total || 0} ресторанов
         </p>
-        {/* Пагинация будет добавлена позже при необходимости */}
+        {pagination && pagination.total > restaurants?.length && (
+          <p className="text-sm text-muted-foreground">
+            Загружены все доступные рестораны
+          </p>
+        )}
       </div>
     </div>
   )

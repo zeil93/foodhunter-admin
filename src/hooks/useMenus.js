@@ -10,8 +10,15 @@ export function useMenus(filters = {}) {
     try {
       setLoading(true)
       setError(null)
-      const data = await apiService.menus.list(filters)
-      setMenus(data.data || data)
+      
+      // Если передан restaurant_id, используем специальный эндпоинт для получения меню ресторана
+      if (filters.restaurant_id) {
+        const data = await apiService.menus.getByRestaurant(filters.restaurant_id)
+        setMenus(data.items || data)
+      } else {
+        const data = await apiService.menus.list(filters)
+        setMenus(data.items || data)
+      }
     } catch (err) {
       setError(err.message)
       console.error('Error fetching menus:', err)
@@ -120,7 +127,7 @@ export function useRestaurantMenus(restaurantId) {
         setLoading(true)
         setError(null)
         const data = await apiService.menus.getByRestaurant(restaurantId)
-        setMenus(data.data || data)
+        setMenus(data.items || data)
       } catch (err) {
         setError(err.message)
         console.error('Error fetching restaurant menus:', err)

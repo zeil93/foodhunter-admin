@@ -1,6 +1,9 @@
 const API_BASE_URL = 'https://xromconsulting.com/foodhunter/api/v1'
 const ADMIN_TOKEN = '2oQia6qIlr4i34d9yHRSAliGFWBGvSFo9xCBotmL2dGOOooFZP4ldMSSbfACnrhl'
 
+// Swagger документация доступна по адресу: https://xromconsulting.com/foodhunter/swagger/
+// Полная спецификация API сохранена в файле api-spec.json
+
 class ApiService {
   constructor() {
     this.baseURL = API_BASE_URL
@@ -90,13 +93,13 @@ class ApiService {
     // Получить список меню
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/restaurants/menus${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/admin/restaurants/menus${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить меню по ID
     get: async (id) => {
-      return this.request(`/restaurants/menus/${id}`)
+      return this.request(`/admin/restaurants/menus/${id}`)
     },
 
     // Создать новое меню
@@ -133,13 +136,13 @@ class ApiService {
     // Получить список категорий
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/restaurants/menus/categories${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/admin/restaurants/menus/categories${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить категорию по ID
     get: async (id) => {
-      return this.request(`/restaurants/menus/categories/${id}`)
+      return this.request(`/admin/restaurants/menus/categories/${id}`)
     },
 
     // Создать новую категорию
@@ -176,13 +179,13 @@ class ApiService {
     // Получить список блюд
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/restaurants/menus/dishes${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/admin/restaurants/menus/dishes${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить блюдо по ID
     get: async (id) => {
-      return this.request(`/restaurants/menus/dishes/${id}`)
+      return this.request(`/admin/restaurants/menus/dishes/${id}`)
     },
 
     // Создать новое блюдо
@@ -203,7 +206,7 @@ class ApiService {
 
     // Удалить блюдо
     delete: async (id) => {
-      return this.request(`/restaurants/menus/dishes/${id}`, {
+      return this.request(`/admin/restaurants/menus/dishes/${id}`, {
         method: 'DELETE',
       })
     },
@@ -215,17 +218,17 @@ class ApiService {
 
     // Получить блюда категории
     getByCategory: async (categoryId) => {
-      return this.request(`/restaurants/menus/categories/${categoryId}/dishes`)
+      return this.request(`/admin/restaurants/menus/categories/${categoryId}/dishes`)
     },
 
     // Получить блюда ресторана
     getByRestaurant: async (restaurantId) => {
-      return this.request(`/restaurants/${restaurantId}/dishes`)
+      return this.request(`/admin/restaurants/${restaurantId}/dishes`)
     },
 
     // Добавить изображение к блюду
     addImage: async (id, imageData) => {
-      return this.request(`/restaurants/menus/dishes/${id}/image`, {
+      return this.request(`/admin/restaurants/menus/dishes/${id}/image`, {
         method: 'PUT',
         body: JSON.stringify(imageData),
       })
@@ -233,7 +236,7 @@ class ApiService {
 
     // Получить изображение блюда
     getImage: async (id) => {
-      return this.request(`/restaurants/menus/dishes/${id}/image`)
+      return this.request(`/admin/restaurants/menus/dishes/${id}/image`)
     },
   }
 
