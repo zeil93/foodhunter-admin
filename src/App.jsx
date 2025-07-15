@@ -15,6 +15,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/restaurants" element={<RestaurantsSimple />} />
           <Route path="/restaurants/:restaurantId" element={<RestaurantView />} />
+          <Route path="/restaurants/:restaurantId/edit" element={<RestaurantDetail />} />
           <Route path="/restaurants/:restaurantId/menus/:menuId" element={<MenuDetail />} />
         </Routes>
       </Layout>

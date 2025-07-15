@@ -1,5 +1,9 @@
-const API_BASE_URL = 'https://xromconsulting.com/foodhunter/api/v1'
-const ADMIN_TOKEN = '2oQia6qIlr4i34d9yHRSAliGFWBGvSFo9xCBotmL2dGOOooFZP4ldMSSbfACnrhl'
+// Импортируем конфигурацию API из api-config.js
+import { API_CONFIG } from '../../api-config.js'
+
+// Используем конфигурацию из отдельного файла
+const API_BASE_URL = `${API_CONFIG.baseUrl}/api/${API_CONFIG.apiVersion}`
+const ADMIN_TOKEN = API_CONFIG.adminToken
 
 class ApiService {
   constructor() {
@@ -19,10 +23,26 @@ class ApiService {
       ...options,
     }
 
+    // Отладочная информация
+    console.log('API Request:', {
+      url,
+      method: config.method || 'GET',
+      headers: config.headers,
+    })
+
     try {
       const response = await fetch(url, config)
       
+      // Отладка ответа
+      console.log('API Response:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: response.url,
+      })
+      
       if (!response.ok) {
+        const errorText = await response.text().catch(() => 'No error details')
+        console.error('API Error Details:', errorText)
         throw new Error(`HTTP error! status: ${response.status}`)
       }
       
@@ -38,7 +58,15 @@ class ApiService {
   restaurants = {
     // Получить список ресторанов
     list: async (params = {}) => {
-      const queryParams = new URLSearchParams(params).toString()
+      // Ensure we're requesting a large page size to get all restaurants
+      // Default to page 1 and 100 items per page if not specified
+      const paginatedParams = {
+        page: 1,
+        page_size: 100,
+        ...params
+      }
+      
+      const queryParams = new URLSearchParams(paginatedParams).toString()
       const endpoint = `/admin/restaurants${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
@@ -89,9 +117,20 @@ class ApiService {
   menus = {
     // Получить список меню
     list: async (params = {}) => {
-      const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/restaurants/menus${queryParams ? `?${queryParams}` : ''}`
-      return this.request(endpoint)
+      // Если указан restaurant_id, то используем эндпоинт для получения меню конкретного ресторана
+      if (params.restaurant_id) {
+        const restaurantId = params.restaurant_id
+        // Удаляем restaurant_id из параметров, чтобы не дублировать его в URL
+        const { restaurant_id, ...otherParams } = params
+        const queryParams = new URLSearchParams(otherParams).toString()
+        const endpoint = `/admin/restaurants/${restaurantId}/menus${queryParams ? `?${queryParams}` : ''}`
+        return this.request(endpoint)
+      } else {
+        // Общий список меню
+        const queryParams = new URLSearchParams(params).toString()
+        const endpoint = `/admin/restaurants/menus${queryParams ? `?${queryParams}` : ''}`
+        return this.request(endpoint)
+      }
     },
 
     // Получить меню по ID
