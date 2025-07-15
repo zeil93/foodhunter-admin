@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Layout } from './components/layout/Layout'
 import { Dashboard } from './pages/Dashboard'
 import { Restaurants } from './pages/Restaurants'
-import { Menus } from './pages/Menus'
-import { Dishes } from './pages/Dishes'
+import { RestaurantDetail } from './pages/RestaurantDetail'
+import { MenuDetail } from './pages/MenuDetail'
 import './App.css'
 
 function App() {
@@ -13,8 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/restaurants" element={<Restaurants />} />
-          <Route path="/menus" element={<Menus />} />
-          <Route path="/dishes" element={<Dishes />} />
+          <Route path="/restaurants/:restaurantId" element={<RestaurantDetail />} />
+          <Route path="/restaurants/:restaurantId/menus/:menuId" element={<MenuDetail />} />
         </Routes>
       </Layout>
     </Router>

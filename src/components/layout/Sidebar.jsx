@@ -27,16 +27,6 @@ const menuItems = [
     href: '/restaurants'
   },
   {
-    title: 'Меню',
-    icon: Menu,
-    href: '/menus'
-  },
-  {
-    title: 'Блюда',
-    icon: ChefHat,
-    href: '/dishes'
-  },
-  {
     title: 'Справочники',
     icon: Settings,
     href: '/references',

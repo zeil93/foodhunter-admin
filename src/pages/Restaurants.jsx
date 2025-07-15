@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -263,10 +264,12 @@ export function Restaurants() {
                 </div>
 
                 <div className="flex space-x-2 pt-2">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    <Eye className="w-4 h-4 mr-1" />
-                    Просмотр
-                  </Button>
+                  <Link to={`/restaurants/${restaurant.id}`} className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full">
+                      <Eye className="w-4 h-4 mr-1" />
+                      Просмотр
+                    </Button>
+                  </Link>
                   <Button variant="outline" size="sm" className="flex-1">
                     <Edit className="w-4 h-4 mr-1" />
                     Редактировать
