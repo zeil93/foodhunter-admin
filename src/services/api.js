@@ -90,18 +90,18 @@ class ApiService {
     // Получить список меню
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/admin/menus${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/restaurants/menus${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить меню по ID
     get: async (id) => {
-      return this.request(`/admin/menus/${id}`)
+      return this.request(`/restaurants/menus/${id}`)
     },
 
     // Создать новое меню
     create: async (data) => {
-      return this.request('/admin/menus', {
+      return this.request('/admin/restaurants/menus', {
         method: 'POST',
         body: JSON.stringify(data),
       })
@@ -109,7 +109,7 @@ class ApiService {
 
     // Обновить меню
     update: async (id, data) => {
-      return this.request(`/admin/menus/${id}`, {
+      return this.request(`/admin/restaurants/menus/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
       })
@@ -117,7 +117,7 @@ class ApiService {
 
     // Удалить меню
     delete: async (id) => {
-      return this.request(`/admin/menus/${id}`, {
+      return this.request(`/admin/restaurants/menus/${id}`, {
         method: 'DELETE',
       })
     },
@@ -133,18 +133,18 @@ class ApiService {
     // Получить список категорий
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/admin/categories${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/restaurants/menus/categories${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить категорию по ID
     get: async (id) => {
-      return this.request(`/admin/categories/${id}`)
+      return this.request(`/restaurants/menus/categories/${id}`)
     },
 
     // Создать новую категорию
-    create: async (data) => {
-      return this.request('/admin/categories', {
+    create: async (menuId, data) => {
+      return this.request(`/admin/restaurants/menus/${menuId}/categories`, {
         method: 'POST',
         body: JSON.stringify(data),
       })
@@ -152,7 +152,7 @@ class ApiService {
 
     // Обновить категорию
     update: async (id, data) => {
-      return this.request(`/admin/categories/${id}`, {
+      return this.request(`/admin/restaurants/menus/categories/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
       })
@@ -160,14 +160,14 @@ class ApiService {
 
     // Удалить категорию
     delete: async (id) => {
-      return this.request(`/admin/categories/${id}`, {
+      return this.request(`/admin/restaurants/menus/categories/${id}`, {
         method: 'DELETE',
       })
     },
 
     // Получить категории меню
     getByMenu: async (menuId) => {
-      return this.request(`/admin/menus/${menuId}/categories`)
+      return this.request(`/admin/restaurants/menus/${menuId}/categories`)
     },
   }
 
@@ -176,18 +176,18 @@ class ApiService {
     // Получить список блюд
     list: async (params = {}) => {
       const queryParams = new URLSearchParams(params).toString()
-      const endpoint = `/admin/dishes${queryParams ? `?${queryParams}` : ''}`
+      const endpoint = `/restaurants/menus/dishes${queryParams ? `?${queryParams}` : ''}`
       return this.request(endpoint)
     },
 
     // Получить блюдо по ID
     get: async (id) => {
-      return this.request(`/admin/dishes/${id}`)
+      return this.request(`/restaurants/menus/dishes/${id}`)
     },
 
     // Создать новое блюдо
-    create: async (data) => {
-      return this.request('/admin/dishes', {
+    create: async (menuId, data) => {
+      return this.request(`/admin/restaurants/menus/${menuId}/dishes`, {
         method: 'POST',
         body: JSON.stringify(data),
       })
@@ -195,7 +195,7 @@ class ApiService {
 
     // Обновить блюдо
     update: async (id, data) => {
-      return this.request(`/admin/dishes/${id}`, {
+      return this.request(`/admin/restaurants/menus/dishes/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
       })
@@ -203,22 +203,37 @@ class ApiService {
 
     // Удалить блюдо
     delete: async (id) => {
-      return this.request(`/admin/dishes/${id}`, {
+      return this.request(`/restaurants/menus/dishes/${id}`, {
         method: 'DELETE',
       })
     },
 
+    // Получить блюда меню
+    getByMenu: async (menuId) => {
+      return this.request(`/admin/restaurants/menus/${menuId}/dishes`)
+    },
+
     // Получить блюда категории
     getByCategory: async (categoryId) => {
-      return this.request(`/admin/categories/${categoryId}/dishes`)
+      return this.request(`/restaurants/menus/categories/${categoryId}/dishes`)
+    },
+
+    // Получить блюда ресторана
+    getByRestaurant: async (restaurantId) => {
+      return this.request(`/restaurants/${restaurantId}/dishes`)
     },
 
     // Добавить изображение к блюду
     addImage: async (id, imageData) => {
-      return this.request(`/admin/dishes/${id}/images`, {
-        method: 'POST',
+      return this.request(`/restaurants/menus/dishes/${id}/image`, {
+        method: 'PUT',
         body: JSON.stringify(imageData),
       })
+    },
+
+    // Получить изображение блюда
+    getImage: async (id) => {
+      return this.request(`/restaurants/menus/dishes/${id}/image`)
     },
   }
 
@@ -243,17 +258,17 @@ class ApiService {
 
     // Типы ресторанов
     restaurantTypes: {
-      list: async () => this.request('/admin/restaurant-types'),
-      get: async (id) => this.request(`/admin/restaurant-types/${id}`),
-      create: async (data) => this.request('/admin/restaurant-types', {
+      list: async () => this.request('/admin/restaurants/types'),
+      get: async (id) => this.request(`/admin/restaurants/types/${id}`),
+      create: async (data) => this.request('/admin/restaurants/types', {
         method: 'POST',
         body: JSON.stringify(data),
       }),
-      update: async (id, data) => this.request(`/admin/restaurant-types/${id}`, {
+      update: async (id, data) => this.request(`/admin/restaurants/types/${id}`, {
         method: 'PUT',
         body: JSON.stringify(data),
       }),
-      delete: async (id) => this.request(`/admin/restaurant-types/${id}`, {
+      delete: async (id) => this.request(`/admin/restaurants/types/${id}`, {
         method: 'DELETE',
       }),
     },
