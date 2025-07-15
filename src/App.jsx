@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Layout } from './components/layout/Layout'
-import { Dashboard } from './pages/Dashboard'
+import Layout from './components/layout/Layout'
+import Dashboard from './pages/Dashboard'
 import { Restaurants } from './pages/Restaurants'
-import { RestaurantDetail } from './pages/RestaurantDetail'
+import { RestaurantDetail } from './pages/RestaurantDetailSimple'
 import { MenuDetail } from './pages/MenuDetail'
 import './App.css'
 

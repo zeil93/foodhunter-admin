@@ -155,3 +155,7 @@ export function useAllReferences() {
   }
 }
 
+
+// Алиас для обратной совместимости
+export const useReferences = useAllReferences
+
